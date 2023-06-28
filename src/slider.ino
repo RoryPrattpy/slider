@@ -1,18 +1,23 @@
-/*
- * Project slider
- * Description:
- * Author:
- * Date:
- */
+SYSTEM_MODE(MANUAL);
+SYSTEM_THREAD(ENABLED);
 
-// setup() runs once, when the device is first turned on.
+int lowest = 4095;
+int highest = 0;
+
 void setup() {
-  // Put initialization like pinMode and begin functions here.
-
+  pinMode(A0, INPUT);
+  pinMode(D4, OUTPUT);
+  pinMode(D5, OUTPUT);
+  pinMode(D6, OUTPUT);
+  pinMode(D7, OUTPUT);
+  pinMode(D8, OUTPUT);
 }
 
-// loop() runs over and over again, as quickly as it can execute.
 void loop() {
-  // The core of your code will likely live here.
-
+  lowest = min(analogRead(A0), lowest);
+  highest = max(analogRead(A0), highest);
+  int pin = map(analogRead(A0), lowest, highest, 4, 9);
+  digitalWrite(pin, 1);
+  digitalWrite(pin - 1, 0);
+  digitalWrite(pin + 1, 0);
 }
